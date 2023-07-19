@@ -2,7 +2,7 @@
 
 #### Penulis: Billy Akbar Prabowo
 
- Proyek ini ditulis untuk pemenuhan _submission_ pertama pada _predictive analytics_. Proyek ini membahas mengenai model klasifikasi menggunakan metode _Naive Bayes_ pada data kumpulan _tweet_ bernuansa politik pada Pemilihan Gubernur DKI Jakarta 2017.
+ Proyek ini ditulis untuk pemenuhan _submission_ pertama pada _predictive analytics_. Proyek ini membahas mengenai model klasifikasi menggunakan metode _Naive Bayes_ dan _confusion matrix_ pada data kumpulan _tweet_ bernuansa politik pada Pemilihan Gubernur DKI Jakarta 2017.
 
 ## Domain Proyek
 
@@ -14,9 +14,8 @@
 
 <br>
 
-Indonesia sebagai negara demokrasi menjamin masyakaratnya untuk bebas berpendapat melalui Undang-Undang Dasar (UUD) 1945. Dengan perkembangan teknologi yang semakin pesat, salah satu _platform_ digital, Twitter, menjadi salah satu komponen utama dalam yang mampu menyebarluaskan informasi kepada masyarakat dan berperan  penting dalam melihat sentimen pada suatu topik[1,2]. Di sisi lain, pesta demokrasi akan digelar di Indonesia pada tahun 2024, bertepatan pada pemilihan anggota legislatif dan eksekutif di tingkat daerah maupun nasional. Hal tersebut menjadi penting untuk pengusaha untuk melakukan strategi bisnis yang sesuai supaya tetap memiliki _positive growth_ pada sentimen politik yang akan terjadi di tahun 2024. Maka dari itu, analisis sentimen _tweet_ berkaitan pada politik dapat dipelajari dari mengklasifikasikan dan memprediksi sentimen masyarakat menggunakan model algoritma yang sesuai. Proyek ini akan menganalisis kumpulan _tweet_ saat Pemilihan Gubernur DKI Jakarta tahun 2017 yang diklasifikasikan dengan menggunakan algoritma _Naive Bayes_ untuk mendapatkan akurasi optimal.
+Indonesia sebagai negara demokrasi menjamin masyakaratnya untuk bebas berpendapat melalui Undang-Undang Dasar (UUD) 1945. Dengan perkembangan teknologi yang semakin pesat, salah satu _platform_ digital, Twitter, menjadi salah satu komponen utama dalam yang mampu menyebarluaskan informasi kepada masyarakat dan berperan  penting dalam melihat sentimen pada suatu topik[1,2]. Di sisi lain, pesta demokrasi akan digelar di Indonesia pada tahun 2024, bertepatan pada pemilihan anggota legislatif dan eksekutif di tingkat daerah maupun nasional. Hal tersebut menjadi penting untuk perusahaan atau sebuah organisasi untuk melakukan strategi mengenai keberlangsungan kegiatan dalam mengantisipasi potensi adanya gesekan sosial atau tidak di 2024. Maka dari itu, analisis sentimen _tweet_ berkaitan pada politik dapat dipelajari dari mengklasifikasikan dan memprediksi sentimen masyarakat menggunakan model algoritma yang sesuai. Proyek ini akan menganalisis kumpulan _tweet_ saat Pemilihan Gubernur DKI Jakarta tahun 2017 yang diklasifikasikan dengan menggunakan algoritma _Naive Bayes_ dan _confusion matrix_ untuk membandingkan hasil akurasi maupun prediksi tiap model.
 
-Referensi Utama Proyek: [THE IMPLEMENTATION OF THE MACHINE LEARNING ALGORITHM FOR THE SENTIMENT ANALYSIS OF INDONESIA’S 2019 PRESIDENTIAL ELECTION](https://journals.iium.edu.my/ejournal/index.php/iiumej/article/view/1532/790) 
 
 ## Business Understanding
 Berdasarkan dari latar belakang tersebut, maka pada laporan ini akan mencakup beberapa aspek berikut, mencakup:
@@ -39,6 +38,12 @@ Berdasarkan dari latar belakang tersebut, maka pada laporan ini akan mencakup be
 _Dataset_ yang digunakan dalam proyek ini merupakan data _tweet_ pada Pemilihan Gubernur DKI Jakarta 2017 yang dapat diunduh di  [Kaggle : Sentiment Analysis](https://www.kaggle.com/datasets/deniyulian/sentiment-analysis).
 
 Informasi tentang _dataset_:
+
+| Jenis                  | Keterangan                                                                                                        |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Sumber                 |  [Kaggle : Sentiment Analysis](https://www.kaggle.com/datasets/deniyulian/sentiment-analysis)                     |
+| Kategori               | Sosial dan Politik                                                                                                            |
+| Jenis & Ukuran berkas  | TXT (2.07MB)                                                                                                      |  
 
 - Data berjudul _dataset_tweet_sentiment_pilkada_DKI_2017.csv_ dan memiliki format CSV (Comma-Seperated Values).
 - Data memiliki 900 _rows_ yang berisikan mengenai _tweet_ dan 4 _column_ yang terdiri dari nomor, sentimen, pasangan calon, dan _text tweet_.
