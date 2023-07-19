@@ -10,11 +10,11 @@
 
 ![Twitter](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/3faf122f-ee94-4bff-bea8-7a97b4a90fbf)
 
-[Referensi gambar](https://www.inews.id/finance/bisnis/tingkatkan-pendapatan-twitter-kembali-izinkan-iklan-politik)
+**[Gambar 1: Ilustrasi Twitter](https://www.inews.id/finance/bisnis/tingkatkan-pendapatan-twitter-kembali-izinkan-iklan-politik)**
 
 <br>
 
-Indonesia sebagai negara demokrasi menjamin masyakaratnya untuk bebas berpendapat melalui Undang-Undang Dasar (UUD) 1945. Dengan perkembangan teknologi yang semakin pesat, salah satu _platform_ digital, Twitter, menjadi salah satu komponen utama dalam yang mampu menyebarluaskan informasi kepada masyarakat dan berperan  penting dalam melihat sentimen pada suatu topik[1,2]. Di sisi lain, pesta demokrasi akan digelar di Indonesia pada tahun 2024, bertepatan pada pemilihan anggota legislatif dan eksekutif di tingkat daerah maupun nasional. Hal tersebut menjadi penting untuk pengusaha untuk melakukan strategi bisnis yang sesuai supaya tetap memiliki _positive growth_ pada sentimen politik yang akan terjadi di tahun 2024. Maka dari itu, analisis sentimen _tweet_ berkaitan pada politik dapat dipelajari dari mengklasifikasikan dan memprediksi sentimen masyarakat menggunakan model algoritma yang sesuai. Proyek ini akan menganalisis kumpulan _tweet_ saat Pemilihan Gubernur DKI Jakarta tahun 2017 yang diklasifikasikan dengan menggunakan algoritma _Naive Bayes_ dan _Support Vector Machine/SVM_ untuk mendapatkan akurasi paling optimal.
+Indonesia sebagai negara demokrasi menjamin masyakaratnya untuk bebas berpendapat melalui Undang-Undang Dasar (UUD) 1945. Dengan perkembangan teknologi yang semakin pesat, salah satu _platform_ digital, Twitter, menjadi salah satu komponen utama dalam yang mampu menyebarluaskan informasi kepada masyarakat dan berperan  penting dalam melihat sentimen pada suatu topik[1,2]. Di sisi lain, pesta demokrasi akan digelar di Indonesia pada tahun 2024, bertepatan pada pemilihan anggota legislatif dan eksekutif di tingkat daerah maupun nasional. Hal tersebut menjadi penting untuk pengusaha untuk melakukan strategi bisnis yang sesuai supaya tetap memiliki _positive growth_ pada sentimen politik yang akan terjadi di tahun 2024. Maka dari itu, analisis sentimen _tweet_ berkaitan pada politik dapat dipelajari dari mengklasifikasikan dan memprediksi sentimen masyarakat menggunakan model algoritma yang sesuai. Proyek ini akan menganalisis kumpulan _tweet_ saat Pemilihan Gubernur DKI Jakarta tahun 2017 yang diklasifikasikan dengan menggunakan algoritma _Naive Bayes_ untuk mendapatkan akurasi optimal.
 
 Referensi Utama Proyek: [THE IMPLEMENTATION OF THE MACHINE LEARNING ALGORITHM FOR THE SENTIMENT ANALYSIS OF INDONESIA’S 2019 PRESIDENTIAL ELECTION](https://journals.iium.edu.my/ejournal/index.php/iiumej/article/view/1532/790) 
 
@@ -33,38 +33,98 @@ Berdasarkan dari latar belakang tersebut, maka pada laporan ini akan mencakup be
 - Mampu membuat model algoritma yang digunakan dengan menghitung akurasi dan mengevaluasi model tersebut menggunakan _confusion matrix_.
 
 ### Solution statements
-- Mengajukan 2 atau lebih solution statement. Misalnya, menggunakan dua atau lebih algoritma untuk mencapai solusi yang diinginkan atau melakukan improvement pada baseline model dengan hyperparameter tuning.
-- Solusi yang diberikan harus dapat terukur dengan metrik evaluasi.
+- Melakukan persiapan / preparasi data menggunakan _Term Frequency-Inverse Document Frequency (TF-IDF)_
+- Membandingkan hasil akurasi dari model dengan _confusion matrix_
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+_Dataset_ yang digunakan dalam proyek ini merupakan data _tweet_ pada Pemilihan Gubernur DKI Jakarta 2017 yang dapat diunduh di  [Kaggle : Sentiment Analysis](https://www.kaggle.com/datasets/deniyulian/sentiment-analysis).
 
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+Informasi tentang _dataset_:
 
-### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+- Data berjudul _dataset_tweet_sentiment_pilkada_DKI_2017.csv_ dan memiliki format CSV (Comma-Seperated Values).
+- Data memiliki 900 _rows_ yang berisikan mengenai _tweet_ dan 4 _column_ yang terdiri dari nomor, sentimen, pasangan calon, dan _text tweet_.
+- Tidak ada _missing value_ dalam _dataset_.
+  
+### Variabel-variabel pada _dataset_:
+Terdapat dua variabel utama yang digunakan pada proyek ini, yaitu sebagai berikut:
+- sentiment : merupakan jenis sentimen dari masing-masing _tweet_, terdiri dari dua pilihan, yaitu _positive_ dan _negative_.
+- tweet text : merupakan kumpulan _tweet_ yang berisikan mengenai topik politik saat pemilihan Gubernur DKI Jakarta pada 2017.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
 
-## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+## _Data Preparation_
+Sebelum memulai pengolahan data, maka sebelumnya diperlukan beberapa tahapan seperti _import library_ dan _import dataset_ ke dalam kode.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/fc89b49c-89be-4673-ae1b-bb083c349466)
+
+**Gambar 2: Paket _library_ yang akan digunakan saat memodelkan data**
+
+Setelah itu, hubungkan Google Colab dengan sumber _dataset_ (pada kasus ini _dataset_ disimpan pada Google Drive) dengan kode berikut,
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/3d8e33a1-79a0-4cee-88d1-262b147e49db)\
+**Gambar 3: Kode yang digunakan untuk menghubungkan Google Colab pada sumber _dataset_**
+
+Setelah dapat menghubungkan Google Colab dengan sumber _dataset_, maka selanjutnya adalah membaca _dataset_ dengan menuliskan kode dengan judul yang sesuai seperti di bawah ini,
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/3629f617-0c13-4e7e-9d0b-e96a67f69137)
+
+**Gambar 4: Kode yang digunakan untuk membaca _dataset_**
+
+Setelah _dataset_ terbaca, maka proses selanjutnya adalah menghilangkan tanda baca, tautan, maupun simbol yang tidak perlu (karakter selain pembentuk kata) dengan cara menuliskan kode di bawah ini. Hal ini bertujuan untuk mengurangi _noise_ pada model. 
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/5d1d8960-6e0a-4f51-b1b4-80074f75c927)
+
+**Gambar 5: Proses menghilangkan tanda baca, tautan, maupun simbol yang tidak perlu pada  _dataset_**
+
+Setelah berhasil menghilangkan simbol, tautan, dan tanda baca yang tidak perlu, maka kita dapat melakukan visualisasi data untuk mendapatkan gambaran secara menyeluruh mengenai jumlah data maupun _tagging_ sentimennya. Dalam kasus ini, visualisasi data dilakukan dengan _pie chart_ dan memberikan informasi bahwa dari _dataset_ terdapat 50% _tweet_ dengan sentimen negatif dan 50% _tweet_ dengan sentimen positif.
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/c5b9dbd8-4d9c-4ed0-81f1-eea02a9cfa46)
+
+**Gambar 6: Visualisasi  _dataset_ berdasarkan jumlah _tweet_ dan sentimennya**
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Tahapan ini membahas mengenai model _machine learning_ yang digunakan untuk menyelesaikan permasalahan. Kita bisa membagi data uji dan data latih dengan data uji sebesar 20% untuk masing-masing tipe sentimen.
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/1dcf692d-2d16-4f1e-987d-2bea13159fee)
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+**Gambar 7: Pembagian _dataset_ menjadi data uji dan data latih**
+
+Setelah itu, kita bisa mengaplikasikan _Term Frequency-Inverse Document Frequency (TF-IDF)_ yang akan menilai dan melakukan tokenisasi dan digunakan untuk mengetahui frekuensi suatu kata muncul di dalam dokumen.
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/57334ead-4d08-4e6d-a6f9-bebe4ebfe095)
+
+**Gambar 8: Melakukan algoritma TF-IDF untuk mengetahui frekuensi suatu kata muncul di dalam dokumen**
+Dengan catatan, walaupun TF-IDF memiliki kelebihan mudah dan efisien (tidak perlu melakukan tokenisasi), namun metode ini menghilangan informasi kategori pada tiap dokumen/_dataset_.
+
+Setelah itu, kita dapat mengubah teks _tweet_ menjadi representasi dalam pelatihan data pada TF-IDF sebelum melakukan algoritma _Naive Bayes_.
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/c16085ec-9ce8-4283-961f-a139f8cd45f1)
+
+**Gambar 9: Mengubah teks _tweet_ menjadi representasi dalam pelatihan data pada TF-IDF**
+
+Metode algoritma _Naive Bayes_ metode yang dapat memprediksi kelas/kategori probabilitas keanggotaan, seperti probabilitas bahwa sampel yang diberikan
+milik kelas/kategori tertentu [3]. Metode ini didasarkan pada teorema Bayes yang mengasumsikan bahwa peluang dari 2 kejadian terjadi saling memengaruhi. Maka dari itu, metode _Naive Bayes_ mampu mengasumsikan probabilitas ketika kita sudah mengetahui probabilitas tertentu lainnya. Metode ini terkenal mudah dan sederhana. Di sisi lain, walaupun metode ini dapat mengasumsikan probabilitas ketika kita sudah dapat mengetahui probabilitas tertentu lainnya, jika probabilitas kondisionalnya nol maka prediksi akan bernilai nol juga.
+
+Algoritma _Naive Bayes_ akan menghasilkan akurasi yang dapat dihitung dari jumlah data yang diklasifikan dengan benar dibagi dengan jumlah semua data yang diklasifikasikan. Untuk dapat menggunakan metode ini, maka kita perlu mengaktifkannya dengan melakukan _import library_ berikut,
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/b6a59e2f-5264-4100-b766-d0ac222181d5)
+
+**Gambar 10: Melakukan _import library Multinomial Naive Bayes_**
+
+Setelah itu, maka kita dapat melakukan pelatihan data yang telah dipreparasi di atas menggunakan algoritma _Naive Bayes_ untuk mendapatkan akurasinya. Pada kasus ini, akurasi didapatkan 75.56%.
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/e5ba0dd6-f5e3-4d49-bcdc-721a3115e9d4)
+
+**Gambar 11: Algoritma _Multinomial Naive Bayes_**
 
 ## Evaluation
+Pada bagian ini, kita akan mencoba menguji hasil akurasi _Naive Bayes_ dengan metode algoritma _confusion matrix_. Dari akurasi yang diperoleh dengan metode _Naive Bayes_ (75.56%), maka masih ada kemungkinan salah klasifikasi pada _tweet_ karena adanya kemungkinan untuk _False Positive_ maupun _False Negative_. Maka dari itu, _confusion matrix_ dapat membantu untuk dapat mendapatkan pengukuran lain (yaitu presisi, _recall_, dan skor F1).
+
+_Confusion matrix_ merupakan metode evaluasi model dalam melakukan klasifikasi yang terdiri dari ringkasan tabel jumlah perdiksi yang benar dan salah dengan 4 matriks nilai, yaitu _True Positive, True Negative, False Positive_, dan _False Negative_. Suatu model _confusion matrix_ dapat dikatakan bagus jika memiliki nilai _True Positive_ dan _True Negative_ yang tinggi.
+
+
+
+
+
+
+
 Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
 
 Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
@@ -79,4 +139,5 @@ Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, probl
 ## Referensi
 [1] Lawelai, H., Sadat, A., & Suherman, A. (2022). Democracy and Freedom of Opinion in Social Media: Sentiment Analysis on Twitter. PRAJA: Jurnal Ilmiah Pemerintahan, 10(1), 40-48.
 [2] Buntoro, G. A., Arifin, R., Syaifuddiin, G. N., Selamat, A., Krejcar, O., & Hamido, F. (2021). The implementation of the machine learning algorithm for the sentiment analysis of Indonesia’s 2019 presidential election. IIUM Engineering Journal, 22(1), 78-92.
+[3] Leung, K. M. (2007). Naive bayesian classifier. Polytechnic University Department of Computer Science/Finance and Risk Engineering, 2007, 123-156.
 
