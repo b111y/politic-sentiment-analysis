@@ -62,12 +62,54 @@ Sebelum memulai pengolahan data, maka sebelumnya diperlukan beberapa tahapan sep
 - Mengimpor library dengan kode `import`
 - Menghubungkan Google Colab dihubungkan dengan sumber _dataset_ (pada kasus ini _dataset_ disimpan pada Google Drive) dengan kode `import()`
 - Membaca _dataset_ dengan kode `pd.read_csv()`
-- Menghilangkan tanda baca, tautan, maupun simbol yang tidak perlu (karakter selain pembentuk kata) dengan tujuan untuk mengurangi _noise_ pada model
-- Melakukan pembagian _dataset_ menjadi dua yaitu data uji dan data latih dengan data uji sebesar 20% untuk masing-masing tipe sentimen
-- Mengaplikasikan _Term Frequency-Inverse Document Frequency (TF-IDF)_ `TfidfVectorizer()` yang akan menilai dan melakukan tokenisasi dan digunakan untuk mengetahui frekuensi suatu kata muncul di dalam dokumen
+- Menghilangkan tanda baca, tautan, maupun simbol yang tidak perlu (karakter selain pembentuk kata) dengan tujuan untuk mengurangi _noise_ pada model dengan kode `data['Text Tweet'].apply(lambda x: re.sub(r'http\S+', '', x))` dan `data['Text Tweet'].apply(lambda x: re.sub(r'[^a-zA-Z0-9\s]', '', x))`
+
+  <br>
+
+  Setelah tanda baca, tautan, dan simbol yang tidak perlu telah dikurangi, maka data eksisting akan terlihat seperti gambar di bawah ini
+  
+| Id  |  Sentiment |Pasangan Calon| Text Tweet                                         	|
+|-----|------------|-------------	|----------------------------------------------------	|
+|  0 	|  negative 	| Agus-Sylvi  	| Banyak akun kloning seolah2 pendukung agussilv...  	|
+|  1 	|  negative 	| Agus-Sylvi  	|  agussilvy bicara apa kasihan yaalap itu air ma... 	|
+|  2 	|  negative 	| Agus-Sylvi  	|  Kalau aku sih gak nunggu hasil akhir QC tp lag... 	|
+|  3 	|  negative 	| Agus-Sylvi  	|  Kasian oh kasian dengan peluru 1milyar untuk t... 	|
+|  4 	|  negative 	| Agus-Sylvi  	|  Maaf ya pendukung AgusSilvyhayo dukung AniesSa... 	|
 
 
+- Melakukan visualisasi data menggunakan pie chart dan WordCloud untuk melihat banyaknya _dataset_ yang memiliki sentimen baik positif maupun negatif. Untuk visualisasi _pie chart_ dapat menggunakan kode `plt.pie()`. Didapatkan hasil bahwa untuk _dataset_ tersebut memiliki 50% sentimen positif dan 50% sentimen negatif sesuai gambar di bawah ini,
 
+<br>
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/b3fb8ad0-1d31-47df-80e0-bfd4d6e3ebab)
+
+
+<br>
+
+
+- Melakukan pembagian _dataset_ menjadi dua yaitu data uji dan data latih dengan data uji sebesar 20% untuk masing-masing tipe sentimen. Pembagian _dataset_ menggunakan kode `train_test_split()` dan diperoleh bahwa data pelatihan dan data uji sejumlah berikut:
+<br>
+
+| Aspek  |  Jumlah Data Pelatihan | Jumlah Data Uji | Jumlah    |
+|-----   |------------------------|----------------	|-----------|
+|  Positif 	|  360 	| 90  	| 450 |
+|  Negatif 	|  360 	| 90   | 450 |
+
+<br>
+
+- Mengaplikasikan _Term Frequency-Inverse Document Frequency (TF-IDF)_ `TfidfVectorizer()` yang akan menilai dan melakukan tokenisasi dan digunakan untuk mengetahui frekuensi suatu kata muncul di dalam dokumen pada data yang sudah dibagi menjadi data uji dan data pelatihan. Setelah mengimplementasikan TF-IDF, dilakukan pengecekan dataframe setelah dilakukan ekstraksi dengan metode TF-IDF yang tergambar pada gambar dibawah ini,
+
+<br>
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/82d7ff61-85a1-42e1-8d2a-b4af1fae3809)
+
+<br>
+
+- Melakukan EDA dengan bantuan visualisasi WordCloud dan bar-chart untuk kata-kata yang sering muncul pada data yang telah dibagi menjadi data pelatihan dan data uji. Visualisasi WordCloud dapat dilakukan dengan kode `WordCloud()` dan untuk bar-chart dapat menggunakan kode  `plt.bar`. Hasil menunjukkan bahwa 5 kata tertinggi yang sering muncul adalah **ahy, ahokdjarot, yang, aniessandi**, dan **ahok** sesuai pada gambar di bawah ini,
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/e7f016e6-60d5-4bb1-a5d9-aa80651ce33f)
+
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/05bb01f9-49f6-489d-b073-20c3e0eccaef)
 
 ## Modeling
 Pada tahap _modeling_, data yang telah dipreparasi akan diuji dengan metode _Naive Bayes_ dan metode _confusion matrix_. Metode algoritma _Naive Bayes_ metode yang dapat memprediksi kelas/kategori probabilitas keanggotaan, seperti probabilitas bahwa sampel yang diberikan milik kelas/kategori tertentu [3]. Metode ini didasarkan pada teorema Bayes yang mengasumsikan bahwa peluang dari 2 kejadian terjadi saling memengaruhi. Maka dari itu, metode _Naive Bayes_ mampu mengasumsikan probabilitas ketika user sudah mengetahui probabilitas tertentu lainnya. Metode ini terkenal mudah dan sederhana. Di sisi lain, walaupun metode ini dapat mengasumsikan probabilitas ketika user sudah dapat mengetahui probabilitas tertentu lainnya, jika probabilitas kondisionalnya nol maka prediksi akan bernilai nol juga. Algoritma _Naive Bayes_ akan menghasilkan akurasi yang dapat dihitung dari jumlah data yang diklasifikan dengan benar dibagi dengan jumlah semua data yang diklasifikasikan atau dapat ditulis pada rumus berikut:
@@ -76,10 +118,6 @@ $\text{Accuracy} = \frac{correctly-classified-items}{all-classified-items}$
 <br>
 
 _Confusion matrix_ merupakan metode evaluasi model dalam melakukan klasifikasi yang terdiri dari ringkasan tabel jumlah perdiksi yang benar dan salah dengan 4 matriks nilai, yaitu _True Positive (TP), True Negative (TN), False Positive (FP)_, dan _False Negative (FN)_. Suatu model _confusion matrix_ dapat dikatakan bagus jika memiliki nilai _True Positive_ dan _True Negative_ yang tinggi.
-
-![1_fxiTNIgOyvAombPJx5KGeA](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/f213e867-231e-49ba-8e66-a1fcd9f84341)
-
-**[Gambar 2: Ilustrasi _Confusion Matrix_](https://towardsdatascience.com/confusion-matrix-for-your-multi-class-machine-learning-model-ff9aa3bf7826)**
 
 Terdapat beberapa aspek parameter untuk _confusion matrix_, yaitu presisi, _recall_, dan F1. Presisi adalah pembagian antara TP dengan (TP+FP) atau perbandingan hasil yang positif secara benar dengan semua data yang dikategorikan sebagai positif, atau dapat ditulis pada rumus berikut:
 <br>
@@ -102,18 +140,21 @@ Dari aspek-aspek di atas, maka masing-masing nilainya akan dibandingkan untuk me
 ## Evaluation
 Percobaan menggunakan model _Naive Bayes_, nilai akurasi diukur dengan rumus pada bab Modeling. Setelah dijalankan, maka didapatkan akurasi sebesar 75.56%. Dari hasil ini dapat diindikasikan bahwa ada kemungkinan salah klasifikasi pada _tweet_ karena adanya kemungkinan untuk _False Positive_ maupun _False Negative_. Maka dari itu, _confusion matrix_ dapat membantu untuk evaluasi model dan melihat nilai pengukuran lain (yaitu presisi, _recall_, dan skor F1).
 
-Implementasi model _confusion matrix_ yang menghasilkan matriks 2x2, sebagai berikut dan nilai presisi, _recall_, dan skor F1.
+Implementasi model _confusion matrix_ yang menghasilkan matriks 2x2, sebagai berikut dan nilai presisi, _recall_, dan skor F1. Dari hasil matriks 2x2, hasil yang diperoleh untuk TP dan TN memiliki nilai yang relatif tinggi. Hal ini membuktikan bahwa model ini sudah lumayan bagus untuk melakukan klasifikasi sentimen. Selain itu, didapatkan juga nilai presisi, _recall_, dan skor F1. Nilai presisi pada model ini adalah 76.02%, atau sedikit lebih tinggi dengan akurasi _Naive Bayes_. Sedangkan diperoleh nilai _recall_ adalah 75.56% atau sama dengan akurasi pada _Naive Bayes_. Terakhir,diperoleh F1 sebesar 75.45% yang hasilnya hampir mirip dengan _recall_ dan akurasi _Naive Bayes_.
 
-![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/e3135539-7c6c-4933-b7c3-80dc0dce372e)
+Hasil percobaan tersebut dapat disimpulkan pada tabel di bawah ini,
 
-**Gambar 3: Hasil analisis metode _confusion matrix_ yang menghasilkan matriks 2x2 dan nilai presisi, _recall_ dan skor F1**
-
-Jika dilihat pada matriks 2x2, hasil yang diperoleh untuk TP dan TN memiliki nilai yang relatif tinggi. Hal ini membuktikan bahwa model ini sudah lumayan bagus untuk melakukan klasifikasi sentimen. Selain itu, didapatkan juga nilai presisi, _recall_, dan skor F1. Nilai presisi pada model ini adalah 76.02%, atau sedikit lebih tinggi dengan akurasi _Naive Bayes_. Sedangkan diperoleh nilai _recall_ adalah 75.56% atau sama dengan akurasi pada _Naive Bayes_. Terakhir,diperoleh F1 sebesar 75.45% yang hasilnya hampir mirip dengan _recall_ dan akurasi _Naive Bayes_.
+|  Aspek 	|  Metode 	| Hasil (%)  	|
+|---	|---	|---	|
+|  Akurasi 	|  _Naive Bayes_ 	|  75.56 	|
+|  Presisi 	|  _Confusion Matrix_ 	|  76.02 	|
+|  _Recall_ 	|  _Confusion Matrix_ 	|  75.56 	|
+|  F1 	|  _Confusion Matrix_ 	|  75.45 	|
 
 Dari percobaan ini maka dapat disimpulkan beberapa hal yaitu:
 - Preparasi data dilakukan dengan cara menghilangkan tanda baca, simbol, dan tautan untuk menghindari _noise_ serta TF-IDF
 - Pemodelan dilakukan dengan metode _Naive Bayes_ yang memperoleh akurasi 75.56% dan _confusion matrix_ yang memperoleh nilai presisi sebesar 76.02%, nilai _recall_ sebesar 75.56%, dan F1 sebesar 75.45%.
-- Dapat disimpulkan bahwa kedua metode tersebut memiliki akurasi yang relatif tinggi dan hasil yang serupa.
+- Kedua metode tersebut memiliki akurasi yang relatif tinggi dan hasil yang serupa.
   
 ## Referensi
 - [1] [Lawelai, H., Sadat, A., & Suherman, A. (2022). Democracy and Freedom of Opinion in Social Media: Sentiment Analysis on Twitter. PRAJA: Jurnal Ilmiah Pemerintahan, 10(1), 40-48.](https://jurnal.umsrappang.ac.id/praja/article/view/585)
