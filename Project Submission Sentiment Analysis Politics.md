@@ -23,13 +23,12 @@ Berdasarkan dari latar belakang tersebut, maka pada laporan ini akan mencakup be
 
 ### Problem Statements
 - Bagaimana cara melakukan pra-pemrosesan data agar dapat digunakan untuk melatih model dari _dataset_ yang tersedia?
-- Bagaimana cara membuat model yang akan digunakan untuk memprediksi?
-- Bagaimana sentimen masyarakat yang direpresentasikan oleh kumpulan _tweets_ pada Pemilihan Gubernur DKI Jakarta 2017?
+- Bagaimana cara membuat model yang akan digunakan untuk memprediksi sentimen?
 - Apakah model algoritma yang dibuat bisa dikatakan akurat?
   
 ### Goals
 - Mampu mengetahui dan melakukan persiapan data untuk dapat dilatih oleh model.
-- Mampu membuat model machine learning yang dapat memprediksi sentimen masyarakat mengenai politik pada Pemilihan Gubernur DKI Jakarta 2017.
+- Mampu membuat model machine learning yang dapat mengklasifikasi sentimen masyarakat mengenai politik pada Pemilihan Gubernur DKI Jakarta 2017.
 - Mampu membuat model algoritma yang digunakan dengan menghitung akurasi dan mengevaluasi model tersebut menggunakan _confusion matrix_.
 
 ### Solution statements
@@ -117,27 +116,29 @@ Setelah itu, maka kita dapat melakukan pelatihan data yang telah dipreparasi di 
 ## Evaluation
 Pada bagian ini, kita akan mencoba menguji hasil akurasi _Naive Bayes_ dengan metode algoritma _confusion matrix_. Dari akurasi yang diperoleh dengan metode _Naive Bayes_ (75.56%), maka masih ada kemungkinan salah klasifikasi pada _tweet_ karena adanya kemungkinan untuk _False Positive_ maupun _False Negative_. Maka dari itu, _confusion matrix_ dapat membantu untuk dapat mendapatkan pengukuran lain (yaitu presisi, _recall_, dan skor F1).
 
-_Confusion matrix_ merupakan metode evaluasi model dalam melakukan klasifikasi yang terdiri dari ringkasan tabel jumlah perdiksi yang benar dan salah dengan 4 matriks nilai, yaitu _True Positive, True Negative, False Positive_, dan _False Negative_. Suatu model _confusion matrix_ dapat dikatakan bagus jika memiliki nilai _True Positive_ dan _True Negative_ yang tinggi.
+_Confusion matrix_ merupakan metode evaluasi model dalam melakukan klasifikasi yang terdiri dari ringkasan tabel jumlah perdiksi yang benar dan salah dengan 4 matriks nilai, yaitu _True Positive (TP), True Negative (TN), False Positive (FP)_, dan _False Negative (FN)_. Suatu model _confusion matrix_ dapat dikatakan bagus jika memiliki nilai _True Positive_ dan _True Negative_ yang tinggi.
 
+![1_fxiTNIgOyvAombPJx5KGeA](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/f213e867-231e-49ba-8e66-a1fcd9f84341)
 
+**[Gambar 12: Ilustrasi _Confusion Matrix_](https://towardsdatascience.com/confusion-matrix-for-your-multi-class-machine-learning-model-ff9aa3bf7826)**
 
+Berikut adalah implementasi model _confusion matrix_ yang menghasilkan matriks 2x2 dan nilai presisi, _recall_, dan skor F1.
 
+![image](https://github.com/b111y/politic-sentiment-analysis/assets/84972036/e3135539-7c6c-4933-b7c3-80dc0dce372e)
 
+**Gambar 13: Hasil analisis metode _confusion matrix_ yang menghasilkan matriks 2x2 dan nilai presisi, _recall_ dan skor F1**
 
+Jika dilihat pada matriks 2x2, hasil yang diperoleh untuk TP dan TN memiliki nilai yang relatif tinggi. Hal ini membuktikan bahwa model ini sudah lumayan bagus untuk melakukan klasifikasi sentimen. Selain itu, didapatkan juga nilai presisi, _recall_, dan skor F1. Presisi adalah pembagian antara TP dengan (TP+FP) - atau perbandingan hasil yang positif secara benar dengan semua data yang dikategorikan sebagai positif. Nilai presisi pada model ini adalah 76.02%, atau sedikit lebih tinggi dengan akurasi _Naive Bayes_. Sedangkan _recall_ adalah pembagian antara TP dengan (TP+FN) atau pembagian hasil yang positif secara benar dengan penjumlahan semua hal yang seharusnya dikategorikan positif. Diperoleh nilai _recall_ adalah 75.56% atau sama dengan akurasi pada _Naive Bayes_. Sedangkan yang terakhir adalah skor F1. Skor ini diperoleh dari perkalian dari perbandingan (presisi x _recall_) dengan (presisi + _recall) yang hasilnya dikali 2. Dari pengujian _confusion matrix_ diperoleh F1 sebesar 75.45% yang hasilnya hampir mirip dengan _recall_ dan akurasi _Naive Bayes_.
 
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+## Kesimpulan
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
-
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
-
+Dari percobaan ini maka dapat disimpulkan beberapa hal yaitu:
+- Preparasi data dilakukan dengan cara menghilangkan tanda baca, simbol, dan tautan untuk menghindari _noise_ serta TF-IDF
+- Pemodelan dilakukan dengan metode _Naive Bayes_ yang memperoleh akurasi 75.56% dan _confusion matrix_ yang memperoleh nilai presisi sebesar 76.02%, nilai _recall_ sebesar 75.56%, dan F1 sebesar 75.45%.
+- Dapat disimpulkan bahwa kedua metode tersebut memiliki akurasi yang relatif tinggi dan hasil yang serupa.
+  
 ## Referensi
-[1] Lawelai, H., Sadat, A., & Suherman, A. (2022). Democracy and Freedom of Opinion in Social Media: Sentiment Analysis on Twitter. PRAJA: Jurnal Ilmiah Pemerintahan, 10(1), 40-48.
-[2] Buntoro, G. A., Arifin, R., Syaifuddiin, G. N., Selamat, A., Krejcar, O., & Hamido, F. (2021). The implementation of the machine learning algorithm for the sentiment analysis of Indonesia’s 2019 presidential election. IIUM Engineering Journal, 22(1), 78-92.
-[3] Leung, K. M. (2007). Naive bayesian classifier. Polytechnic University Department of Computer Science/Finance and Risk Engineering, 2007, 123-156.
+- [1] Lawelai, H., Sadat, A., & Suherman, A. (2022). Democracy and Freedom of Opinion in Social Media: Sentiment Analysis on Twitter. PRAJA: Jurnal Ilmiah Pemerintahan, 10(1), 40-48.
+- [2] Buntoro, G. A., Arifin, R., Syaifuddiin, G. N., Selamat, A., Krejcar, O., & Hamido, F. (2021). The implementation of the machine learning algorithm for the sentiment analysis of Indonesia’s 2019 presidential election. IIUM Engineering Journal, 22(1), 78-92.
+- [3] Leung, K. M. (2007). Naive bayesian classifier. Polytechnic University Department of Computer Science/Finance and Risk Engineering, 2007, 123-156.
 
